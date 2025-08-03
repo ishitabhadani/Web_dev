@@ -26,5 +26,6 @@ ul{
 }
 li{
     list-style-type: square;
-    text-shadow: 2px 4px lightgray;
+    /* text-shadow: 2px 4px lightgray; */
+    text-shadow: 2px 2px #c94313;
 }

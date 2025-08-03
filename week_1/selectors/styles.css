@@ -1,0 +1,62 @@
+/* p.error{
+    color: red;
+}
+p.success{
+    color: #117510;
+}
+p.success.feedback{
+    border: 1px dashed #117510;
+}
+div#content{
+    background-color: #ebebeb;
+    padding: 20px;
+} */
+/* div p{ 
+    takes only the p tags that are in the div tag
+    color: purple;
+}  */
+/* div .error{
+    added space, it will take anything within the div that has class error
+    color: red;
+}*/
+
+/* a[href="https://www.wikipedia.org"]{
+    background-color: rgb(174, 5, 109);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+
+} */
+/* a[href*="wikipedia"]{
+    this aesterisk * signifies anything that contains wikepedia
+    background-color: rgb(174, 5, 109);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+a[href*="example"]{
+    color: white;
+    background-color: red;
+    border: 2px solid blue;
+}
+a[href$=".com"]{
+    the dollar $ sign signifies ends with
+    color: white;
+    background-color: rgb(191, 6, 191);
+    border: 3px dashed blue;
+} */
+div{
+    /*inherited by p tags*/
+    color: lightcoral; 
+    font-weight: bold;
+    /*not inherited*/
+    margin: 100px;
+    border: 2px solid gray;
+}
+p{
+    border: inherit;
+    margin: inherit;
+    color: crimson;
+}
