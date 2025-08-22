@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us Form</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="successToast" class="toast-message">
+    <div class="toast-header">
+      <img src="images/icon-check.svg" alt="Success Checkmark" width="20" height="20">
+      <strong>Message Sent!</strong>
+    </div>
+    <p>Thanks for completing the form. We'll be in touch soon!</p>
+  </div>
+
+
+  <div class="container">
+    <form class="contact-form" novalidate>
+      <h1>Contact Us</h1>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name <span class="required">*</span></label>
+          <input type="text" id="firstName" name="firstName" required>
+          <div class="error-message"></div>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name <span class="required">*</span></label>
+          <input type="text" id="lastName" name="lastName" required>
+          <div class="error-message"></div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address <span class="required">*</span></label>
+        <input type="email" id="email" name="email" required>
+        <div class="error-message"></div>
+      </div>
+      
+      <div class="form-group">
+        <label>Query Type <span class="required">*</span></label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" id="general" name="queryType" value="general" required>
+            <label for="general">General Enquiry</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="support" name="queryType" value="support" required>
+            <label for="support">Support Request</label>
+          </div>
+        </div>
+        <div class="error-message">Please select a query type</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Message <span class="required">*</span></label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <div class="error-message"></div>
+      </div>
+      
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">I consent to being contacted by the team <span class="required">*</span></label>
+        </div>
+        <div class="error-message">To submit this form, please consent to being contacted</div>
+      </div>
+      
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.contact-form');
+    const successToast = document.getElementById('successToast');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent the form from submitting the default way
+        const isValid = validateForm();
+
+        if (isValid) {
+            // Show the toast notification
+            successToast.classList.add('show');
+            // Reset the form fields
+            form.reset();
+            // Uncheck radio buttons visually by removing the active class on labels
+            document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            // Hide the toast after 4 seconds
+            setTimeout(() => {
+                successToast.classList.remove('show');
+            }, 4000);
+        }
+    });
+
+    const validateForm = () => {
+        let valid = true;
+        
+        // Reset all previous error states
+        document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('input.error, textarea.error').forEach(el => el.classList.remove('error'));
+
+        // Get all form fields
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const email = document.getElementById('email');
+        const queryType = document.querySelector('input[name="queryType"]:checked');
+        const message = document.getElementById('message');
+        const consent = document.getElementById('consent');
+
+        // --- VALIDATION CHECKS ---
+
+        // First Name validation
+        if (firstName.value.trim() === '') {
+            showError(firstName, 'This field is required');
+            valid = false;
+        }
+
+        // Last Name validation
+        if (lastName.value.trim() === '') {
+            showError(lastName, 'This field is required');
+            valid = false;
+        }
+
+        // Email validation
+        if (email.value.trim() === '') {
+            showError(email, 'This field is required');
+            valid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+            showError(email, 'Please enter a valid email address');
+            valid = false;
+        }
+
+        // Query Type validation
+        if (!queryType) {
+            const queryError = document.querySelector('.radio-group').parentElement.querySelector('.error-message');
+            queryError.style.display = 'block';
+            valid = false;
+        }
+
+        // Message validation
+        if (message.value.trim() === '') {
+            showError(message, 'This field is required');
+            valid = false;
+        }
+
+        // Consent checkbox validation
+        if (!consent.checked) {
+            const consentError = consent.closest('.form-group').querySelector('.error-message');
+            consentError.style.display = 'block';
+            valid = false;
+        }
+
+        return valid;
+    };
+
+    // Helper function to show an error on a specific field
+    const showError = (inputElement, message) => {
+        inputElement.classList.add('error'); // Adds the red border
+        const errorElement = inputElement.parentElement.querySelector('.error-message');
+        errorElement.textContent = message;
+        errorElement.style.display = 'block'; // Shows the error text
+    };
+});
+</script>
+
+</body>
+</html>
